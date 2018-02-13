@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="/js/datatable.js"></script>
+
+<style>
+body {
+	font-size: 12px;
+}
+
+.table thead {
+	background-color: rgb(253, 199, 69);
+	background: -webkit-linear-gradient(top, rgb(253, 199, 69) 0%,
+		rgb(228, 180, 63) 100%);
+	background: -o-linear-gradient(top, rgb(253, 199, 69) 0%,
+		rgb(228, 180, 63) 100%);
+	background: -ms-linear-gradient(top, rgb(253, 199, 69) 0%,
+		rgb(228, 180, 63) 100%);
+	background: -moz-linear-gradient(top, rgb(253, 199, 69) 0%,
+		rgb(228, 180, 63) 100%);
+	background: linear-gradient(to bottom, rgb(253, 199, 69) 0%,
+		rgb(228, 180, 63) 100%);
+}
+
+.table tbody td>span {
+	display: block;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 1px;
+}
+
+.table tbody td>span {
+	margin: 3px 5px;
+}
+
+.table-condensed>thead>tr>th {
+	padding-left: 10px;
+}
+
+.input-sm, select.input-sm {
+	height: 25px;
+	padding: 3px 5px;
+}
+
+select.input-sm {
+	padding: 3px 1px;
+}
+
+.blue-gradient {
+	background: -webkit-linear-gradient(top, rgb(102, 143, 213) 0%,
+		rgb(63, 112, 194) 91%, rgb(45, 88, 162) 99%, rgb(35, 71, 129) 100%);
+	background: -o-linear-gradient(top, rgb(102, 143, 213) 0%,
+		rgb(63, 112, 194) 91%, rgb(45, 88, 162) 99%, rgb(35, 71, 129) 100%);
+	background: -ms-linear-gradient(top, rgb(102, 143, 213) 0%,
+		rgb(63, 112, 194) 91%, rgb(45, 88, 162) 99%, rgb(35, 71, 129) 100%);
+	background: -moz-linear-gradient(top, rgb(102, 143, 213) 0%,
+		rgb(63, 112, 194) 91%, rgb(45, 88, 162) 99%, rgb(35, 71, 129) 100%);
+	background: linear-gradient(to bottom, rgb(102, 143, 213) 0%,
+		rgb(63, 112, 194) 91%, rgb(45, 88, 162) 99%, rgb(35, 71, 129) 100%);
+}
+
+.btn-info {
+	background-color: #538ad1;
+	border-color: rgb(35, 71, 129);
+}
+
+.btn-info:hover {
+	background-color: rgb(35, 71, 129);
+}
+</style>
+</head>
+
+<body>
+
+	<!-- Datatable Starts Here -->	
+	<div class="container">
+	    <hr class="divider">
+	    <div class="text-center">
+            <button id="btnAdd" type="button" class="btn btn-primary">Add New Employee</button>            
+        </div>
+        <hr class="divider">
+		<table id="employeesTable" width="90%" class="table table-striped table-condensed"></table>			
+	</div>
+	
+	<!-- Modal Add-->
+	<div id="addModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">					
+					<h4 class="modal-title">Add New Employee</h4>					
+				</div>
+				<div class="add-modal-body">
+					<form>
+					    <div class="form-group">
+							<label for="id" class="form-control-label"> Id:</label> 
+							<input type="text" class="form-control" id="id" value="">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label"> Name:</label> 
+							<input type="text" class="form-control" id="name" value="">
+						</div>
+						<div class="form-group">
+							<label for="email" class="form-control-label"> Email:</label>
+							 <input	type="text" class="form-control" id="email" value="">
+						</div>
+						<div class="form-group">
+						<label for="cityList" class="form-control-label"> City:</label>
+							 <select class="form-control form-control-lg" id="cityList">
+						        <option>Bilecik</option>
+						        <option>Eskisehir</option>
+						        <option>Ankara</option>
+						    </select>
+						</div>	                        
+					    <div class="form-group">
+							<label for="date-value" class="form-control-label"> Date:</label>
+							<input class="form-control" id="date-value" type="date" data-role="datebox"
+								   data-options='{"mode": "timebox", "fieldsOrderOverride": "d m y" }'>
+						</div>		
+						
+						<div class="form-group">
+						  <label><input class="form-control" type="checkbox" id="active" value="">Active</label>
+						</div>		
+									
+					</form>
+				</div>				
+				<div class="modal-footer">								
+					<button id="btnAdd" type="button" class="btn btn-primary">Add</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>	
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Modal Update-->
+	<div id="updateModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">					
+					<h4 class="modal-title">Update Employee</h4>
+				</div>
+				<div class="update-modal-body" >
+					<form>
+					    <div class="form-group">
+							<label for="id" class="form-control-label"> Id:</label> 
+							<input type="text" class="form-control" id="id" value="">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label"> Name:</label> 
+							<input type="text" class="form-control" id="name" value="">
+						</div>
+						<div class="form-group">
+							<label for="email" class="form-control-label"> Email:</label>
+							 <input	type="text" class="form-control" id="email" value="">
+						</div>
+						<div class="form-group">
+						<label for="cityList" class="form-control-label"> City:</label>
+							 <select class="form-control form-control-lg" id="cityList">
+						        <option>Bilecik</option>
+						        <option>Eskisehir</option>
+						        <option>Ankara</option>
+						    </select>
+						</div>	                        
+					    <div class="form-group">
+							<label for="date-value" class="form-control-label"> Date:</label>
+							<input class="form-control" id="date-value" type="date" data-role="datebox"
+								   data-options='{"mode": "timebox", "fieldsOrderOverride": "d m y" }'>
+						</div>		
+						
+						<div class="form-group">
+						  <label><input class="form-control" type="checkbox" id="active" value="">Active</label>
+						</div>		
+									
+					</form>
+				</div>				
+				<div class="modal-footer">									
+					<button id="btnUpdate" type="button" class="btn btn-primary">Update</button>
+					<button id="btnDelete" type="button" class="btn btn-primary">Delete</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>	
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>
